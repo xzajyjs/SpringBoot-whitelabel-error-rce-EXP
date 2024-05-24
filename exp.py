@@ -66,7 +66,11 @@ parser.add_argument("-lport", "--localport", help="Listening Port", required=Tru
 parser.add_argument("-t", "--target", help="Target URL. e.g. 'http://127.0.0.1:9091/article?id='", required=True)
 args = parser.parse_args()
 if check_domain(args.target):
-	print(f"{GREEN}[+] Success.{RESET}")
-	exp(args.target, args.localhost, args.localport)
+	try:
+		exp(args.target, args.localhost, args.localport)
+	except Exception as e:
+		print(f"{RED}[-] Exploit failed. {e}{RESET}")
+	else:
+		print(f"{GREEN}[+] Success.{RESET}")
 else:
 	print(f"{RED}[-] Target not exist or not vulnerable.{RESET}")
